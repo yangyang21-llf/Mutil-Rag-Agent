@@ -10,6 +10,9 @@ Parent-Child 流程:
 
 为什么这么做: child 小利于 embedding 命中, parent 大利于 LLM 推理。
 参考腾讯 WeKnora 的 parent-child chunking 设计 (app/utils/splitter.py)。
+
+- **child** = 书后面的**索引标签**（一小条，容易精确匹配）
+- **parent** = 书里的**完整章节**（一大段，AI 推理需要全文）
 """
 
 from typing import Any

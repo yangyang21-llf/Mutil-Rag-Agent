@@ -54,16 +54,18 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     logger.info("=" * 60)
 
     # 1. 校验配置 (无效时直接抛错, 让 uvicorn 退出)
-    settings.validate_runtime()
+    settings.validate_runtime() #检验配置
 
     # 2. 连接 Milvus (必需依赖, 失败则启动失败)
-    milvus_manager.connect()
+    milvus_manager.connect() #连接Milvus向量库
 
     # 3. 初始化 Incident Pipeline (Postgres 事实库 + Redis Stream 队列)
     if settings.incident_pipeline_enabled:
         await connect_postgres()
+            # Postgres 负责持久化保存 AIOps 每次诊断的任务信息和完整报告，是项目的业务档案库。
         await init_incident_schema()
         await incident_queue.connect()
+        # Redis 是高速中转站，不负责长久保存最终报告，负责快速收发、排队调度任务；Postgres 是档案室存最终结果。
 
     # 4. 加载 MCP 工具 (可选依赖, 失败仅 warning)
     await mcp_client_manager.connect(fail_silently=True)

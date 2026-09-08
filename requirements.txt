@@ -37,7 +37,7 @@ rank_bm25>=0.2.2
 
 # ---------- MCP (Model Context Protocol) ----------
 fastmcp>=2.14.0
-langchain-mcp-adapters>=0.2.1,<0.3.0
+langchain-mcp-adapters>=0.3.2,<0.4.0
 
 # ---------- 配置与数据校验 ----------
 pydantic>=2.9.0,<3.0.0

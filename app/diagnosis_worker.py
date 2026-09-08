@@ -51,22 +51,22 @@ class DiagnosisWorker:
         self._heartbeat_task = asyncio.create_task(self._heartbeat_loop())
         logger.info(f"[diagnosis-worker] started consumer={self.consumer_name}")
 
-        while not self._stopping.is_set():
+        while not self._stopping.is_set():  #永远循环，直到被叫停
             # 先尝试回收 stale pending 任务, 再读新任务。
             # 为什么放在这里:
             # - 普通 XREADGROUP 只读新消息, 不会自动处理崩溃 Worker 留下的 pending;
             # - 每轮先 reclaim, 可以让旧任务恢复执行。
-            tasks = await self._claim_stale_tasks_once()
+            tasks = await self._claim_stale_tasks_once()  #先捡起来别人掉下面的单
             if not tasks:
-                tasks = await incident_queue.read_tasks(
+                tasks = await incident_queue.read_tasks(  # 再从队列读取新任务
                     consumer_name=self.consumer_name,
                     count=1,
                     block_ms=settings.diagnosis_worker_block_ms,
                 )
             if not tasks:
-                continue
+                continue #没单的话等待
             for message_id, item in tasks:
-                await self.handle_message(message_id, item)
+                await self.handle_message(message_id, item) #处理一张单
 
     async def stop(self) -> None:
         self._stopping.set()
@@ -89,7 +89,7 @@ class DiagnosisWorker:
             )
             return
 
-        task = await incident_repository.get_task(task_id)
+        task = await incident_repository.get_task(task_id) #查病例（Postgres）
         if task is None:
             await incident_queue.dead_letter(
                 message_id=message_id,
@@ -98,7 +98,7 @@ class DiagnosisWorker:
             )
             return
 
-        if str(task.get("status") or "") == "succeeded":
+        if str(task.get("status") or "") == "succeeded":  #已经治好了？？直接销号，不重复治
             # 幂等保护: Redis 里可能有重复消息, 但 Postgres 已经表明任务完成。
             # 这种情况直接 ACK, 不重复跑诊断, 避免重复写 Evidence。
             logger.info(f"[diagnosis-worker] task={task_id} already succeeded, ack duplicate")
@@ -107,7 +107,7 @@ class DiagnosisWorker:
 
         attempts = int(task.get("attempts") or 0)
         max_attempts = int(task.get("max_attempts") or settings.diagnosis_task_max_attempts)
-        if attempts >= max_attempts:
+        if attempts >= max_attempts:  #如果失败三次？？ 直接转到疑难杂症（DLQ）
             await incident_repository.mark_task_failed(
                 task_id,
                 f"max attempts exhausted before run: attempts={attempts}, max={max_attempts}",
@@ -130,7 +130,7 @@ class DiagnosisWorker:
             # 并发槽 (改造文档第 1/3 步): 所有 Worker 副本共享 worker_diagnosis 全局上限。
             # wait=True 表示槽满了就等 (而不是超跑), 保证无论起多少个 Worker, 同时真正
             # 在跑的诊断不超过 worker_diagnosis_concurrency。心跳续期防长任务被误回收。
-            async with distributed_slot(
+            async with distributed_slot(  #限流：同时最多2台手术
                 "worker_diagnosis",
                 limit=settings.worker_diagnosis_concurrency,
                 ttl_seconds=settings.limiter_default_ttl_sec,
@@ -138,16 +138,16 @@ class DiagnosisWorker:
                 wait=True,
             ):
                 result = await asyncio.wait_for(
-                    run_legacy_langgraph_with_audit(task_id, item),
+                    run_legacy_langgraph_with_audit(task_id, item),   #跑langGraph诊断图
                     timeout=settings.diagnosis_task_timeout_sec,
-                )
-            await incident_repository.mark_task_succeeded(
+                ) #超时保护：十分钟必须出结果
+            await incident_repository.mark_task_succeeded(  #写报告
                 task_id,
                 report=result.report,
                 agent_run_id=result.agent_run_id,
                 evidence_ids=result.evidence_ids,
             )
-            await incident_queue.ack(message_id, stream=item.get("__stream__"))
+            await incident_queue.ack(message_id, stream=item.get("__stream__"))  #销号
             logger.info(
                 f"[diagnosis-worker] task={task_id} succeeded "
                 f"run={result.agent_run_id} evidence={len(result.evidence_ids)} "

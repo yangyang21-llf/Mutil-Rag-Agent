@@ -49,7 +49,9 @@ class AlertmanagerPayload(BaseModel):
 
 
 def _format_alert_as_query(alert: AlertmanagerAlert) -> str:
-    """把结构化告警渲染成紧凑的诊断 query 文本 (给 graph 当 input)。"""
+    """把结构化告警渲染成紧凑的诊断 query 文本 (给 graph 当 input)。
+    把发的 JSON 告警，翻译成一句 "人话" 任务单
+    """
     name = alert.labels.get("alertname", "UnknownAlert")
     severity = alert.labels.get("severity", "warning")
     instance = alert.labels.get("instance", "")
@@ -81,11 +83,11 @@ def _format_alert_as_query(alert: AlertmanagerAlert) -> str:
 def _diagnosis_mode_for(payload: AlertmanagerPayload, alert: AlertmanagerAlert) -> DiagnosisMode:
     """按确定性规则选 fast/deep 模式 (critical/page/p0/p1 或 ≥10 条告警 → deep)。"""
     severity = str(alert.labels.get("severity", "")).lower()
-    if severity in {"critical", "page", "p0", "p1"}:
-        return DiagnosisMode.DEEP
+    if severity in {"critical", "page", "p0", "p1"}: #高危警告
+        return DiagnosisMode.DEEP  #深度诊断
     if len(payload.alerts) >= 10:
         return DiagnosisMode.DEEP
-    return DiagnosisMode.FAST
+    return DiagnosisMode.FAST #快速诊断
 
 
 def _priority_for(alert: AlertmanagerAlert) -> int:
@@ -131,9 +133,9 @@ async def alertmanager_webhook(payload: AlertmanagerPayload, request: Request) -
             skipped.append(alertname)
             continue
 
-        query = _format_alert_as_query(alert)
-        diagnosis_mode = _diagnosis_mode_for(payload, alert)
-        priority = _priority_for(alert)
+        query = _format_alert_as_query(alert) #把告警翻译成一句话任务单
+        diagnosis_mode = _diagnosis_mode_for(payload, alert) #判断该快查还是深查
+        priority = _priority_for(alert) #排优先级
 
         try:
             result = await incident_repository.ingest_alertmanager_alert(
@@ -142,7 +144,7 @@ async def alertmanager_webhook(payload: AlertmanagerPayload, request: Request) -
                 query=query,
                 diagnosis_mode=diagnosis_mode,
                 priority=priority,
-            )
+            ) #登记到Postgres
 
             queue_message_id = ""
             enqueued = False
@@ -164,7 +166,7 @@ async def alertmanager_webhook(payload: AlertmanagerPayload, request: Request) -
                         "fingerprint": alert.fingerprint or "",
                         "startsAt": alert.startsAt,
                     },
-                )
+                ) #投进Redis队列
                 await incident_repository.set_task_queue_message(
                     result.task_id, queue_message_id
                 )

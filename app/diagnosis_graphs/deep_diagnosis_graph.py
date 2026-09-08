@@ -900,15 +900,17 @@ def build_deep_graph():
     wf = StateGraph(DeepDiagnosisState)
 
     # 节点
-    wf.add_node("incident_manager", incident_manager_node)
-    wf.add_node("correlation_context", correlation_context_node)
+    wf.add_node("incident_manager", incident_manager_node)#1接诊 读警告看状态
+    wf.add_node("correlation_context", correlation_context_node)#2关联 查同类历史警告
+    # 专家并行:evidence - [多个专家] - evidence_reducer
+    # 3开单 决定查哪些证件  4专家并行 多个科室同时查
     wf.add_node("evidence_plan", evidence_plan_node)
     for name, source, etype in SPECIALISTS:
         wf.add_node(name, _resolve_specialist_node_fn(name, source, etype))
-    wf.add_node("evidence_reducer", evidence_reducer_node)
-    wf.add_node("rca_judge", rca_judge_node)
-    wf.add_node("remediation_planner", remediation_planner_node)
-    wf.add_node("report", report_node)
+    wf.add_node("evidence_reducer", evidence_reducer_node) #5汇总 合并所有检查结果
+    wf.add_node("rca_judge", rca_judge_node) # 6判定 主治医师定根因  让AI推理出来结果
+    wf.add_node("remediation_planner", remediation_planner_node) #7开方 生成处置建议
+    wf.add_node("report", report_node) #8报告 写完整的诊断报告
 
     # 边: 串行前段
     wf.add_edge(START, "incident_manager")
