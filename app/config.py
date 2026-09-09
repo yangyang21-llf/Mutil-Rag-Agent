@@ -348,6 +348,8 @@ class Settings(BaseSettings):
     mcp_network_url: str = Field(default="http://localhost:8009/mcp", description="网络诊断 MCP URL")
     mcp_docker_transport: str = Field(default="streamable-http", description="Docker 管理 MCP 传输")
     mcp_docker_url: str = Field(default="http://localhost:8011/mcp", description="Docker 管理 MCP URL")
+    mcp_mysql_transport: str = Field(default="streamable-http", description="MySQL 诊断 MCP 传输")
+    mcp_mysql_url: str = Field(default="http://localhost:8012/mcp", description="MySQL 诊断 MCP URL")
 
     # ==================== Agent ====================
     agent_max_steps: int = Field(default=5, description="Plan-Execute 最大步骤 (防死循环)")
@@ -623,6 +625,10 @@ class Settings(BaseSettings):
             "docker": {
                 "transport": self.mcp_docker_transport,
                 "url": self.mcp_docker_url,
+            },
+            "mysql": {
+                "transport": self.mcp_mysql_transport,
+                "url": self.mcp_mysql_url,
             },
         }
 

@@ -62,6 +62,7 @@ SPECIALISTS = (
     ("metric_agent", EvidenceSource.METRIC, "metric_snapshot"),
     ("infra_agent", EvidenceSource.MCP_TOOL_RESULT, "infra_snapshot"),
     ("runbook_agent", EvidenceSource.RUNBOOK, "runbook_match"),
+    ("mysql_agent", EvidenceSource.MCP_TOOL_RESULT, "mysql_snapshot"),
 )
 
 
@@ -83,6 +84,9 @@ def _resolve_specialist_node_fn(name: str, source: EvidenceSource, etype: str):
     elif name == "runbook_agent":
         from app.agents.runbook_agent import run_runbook_agent
         inner = run_runbook_agent
+    elif name == "mysql_agent":
+        from app.agents.mysql_agent import run_mysql_agent
+        inner = run_mysql_agent
     else:
         inner = _make_specialist_node(name, source, etype)
     # 套 dispatch_guard: EvidencePlan 没派遣的 Agent 直接跳过, 不调 LLM。
@@ -278,6 +282,8 @@ _PLAN_KEYWORDS: tuple[tuple[str, tuple[str, ...]], ...] = (
      ("infra_agent", "log_agent")),
     ("sop runbook 手册 流程 规范 步骤 怎么处理 如何排查".split(),
      ("runbook_agent",)),
+    ("mysql database 数据库 慢查询 slow query 连接数 connection threads 主从 复制 replica 数据库连接超时".split(),
+     ("mysql_agent", "log_agent")),
 )
 
 # "强信号" 关键词触发派出全部 (兜底覆盖)

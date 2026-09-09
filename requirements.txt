@@ -65,3 +65,6 @@ ragas>=0.4.0
 langchain-community<0.4
 # OpenEvals 补充 groundedness / helpfulness 双评委，避免只优化单一 RAGAS 指标。
 openevals>=0.2.0,<0.3.0
+
+# ---------- MySQL 诊断 MCP ----------
+pymysql>=1.1.1

@@ -256,6 +256,7 @@ services:
       MCP_WINLOG_URL: http://mcp-winlog:8008/mcp
       MCP_NETWORK_URL: http://mcp-network:8009/mcp
       MCP_DOCKER_URL: http://mcp-docker:8011/mcp
+      MCP_MYSQL_URL: http://mcp-mysql:8012/mcp
     command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "9900", "--workers", "4"]
     ports:
       - "${APP_PORT:-9900}:9900"
@@ -279,6 +280,8 @@ services:
         condition: service_healthy
       mcp-docker:
         condition: service_healthy
+      mcp-mysql:
+        condition: service_healthy
     restart: unless-stopped
 
   worker-1:
@@ -300,6 +303,7 @@ services:
       MCP_WINLOG_URL: http://mcp-winlog:8008/mcp
       MCP_NETWORK_URL: http://mcp-network:8009/mcp
       MCP_DOCKER_URL: http://mcp-docker:8011/mcp
+      MCP_MYSQL_URL: http://mcp-mysql:8012/mcp
     command: ["python", "-m", "app.diagnosis_worker", "--name", "worker-1"]
     volumes:
       - ./data/wiki:/app/data/wiki
@@ -317,6 +321,8 @@ services:
       mcp-network:
         condition: service_healthy
       mcp-docker:
+        condition: service_healthy
+      mcp-mysql:
         condition: service_healthy
     restart: unless-stopped
 
@@ -339,6 +345,7 @@ services:
       MCP_WINLOG_URL: http://mcp-winlog:8008/mcp
       MCP_NETWORK_URL: http://mcp-network:8009/mcp
       MCP_DOCKER_URL: http://mcp-docker:8011/mcp
+      MCP_MYSQL_URL: http://mcp-mysql:8012/mcp
     command: ["python", "-m", "app.diagnosis_worker", "--name", "worker-2"]
     volumes:
       - ./data/wiki:/app/data/wiki
@@ -356,6 +363,8 @@ services:
       mcp-network:
         condition: service_healthy
       mcp-docker:
+        condition: service_healthy
+      mcp-mysql:
         condition: service_healthy
     restart: unless-stopped
 
@@ -378,6 +387,7 @@ services:
       MCP_WINLOG_URL: http://mcp-winlog:8008/mcp
       MCP_NETWORK_URL: http://mcp-network:8009/mcp
       MCP_DOCKER_URL: http://mcp-docker:8011/mcp
+      MCP_MYSQL_URL: http://mcp-mysql:8012/mcp
     command: ["python", "-m", "app.diagnosis_worker", "--name", "worker-3"]
     volumes:
       - ./data/wiki:/app/data/wiki
@@ -396,6 +406,24 @@ services:
         condition: service_healthy
       mcp-docker:
         condition: service_healthy
+      mcp-mysql:
+        condition: service_healthy
+    restart: unless-stopped
+  mcp-mysql:
+    container_name: multi-agent-mcp-mysql
+    profiles: ["app"]
+    build:
+      context: .
+    env_file:
+      - .env
+    command: ["python", "mcp_servers/mysql_server.py"]
+    ports:
+      - "8012:8012"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import socket; s=socket.create_connection(('127.0.0.1', 8012), 2); s.close()"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
     restart: unless-stopped
 
 networks:

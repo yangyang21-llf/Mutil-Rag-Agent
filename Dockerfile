@@ -22,6 +22,8 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
+# 禁用 Docker 注入的代理: 代理会把国内源(清华PyPI)请求劫持转发导致 SSL 失败, 容器内直连清华源
+ENV HTTP_PROXY="" HTTPS_PROXY="" http_proxy="" https_proxy="" ALL_PROXY="" no_proxy="*"
 RUN pip install --upgrade pip && pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
 COPY . .

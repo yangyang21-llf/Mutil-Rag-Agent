@@ -106,6 +106,19 @@ SCENARIOS = {
             "\u526f\u672c\u540c\u6b65\u5ef6\u8fdf > 30s\u3002"
         ),
     },
+    "mysql": {
+        "alertname": "MySQLLongRunningQuery",
+        "severity": "critical",
+        "service": "mysql",
+        "instance": "mysql-primary-01:3306",
+        "summary": "MySQL \u6162\u67e5\u8be2\u5806\u79ef 45 \u6761, \u8fde\u63a5\u6570\u6253\u6ee1",
+        "description": (
+            "mysql_slow_queries \u8fc7\u53bb 10 \u5206\u949f\u65b0\u589e 45 \u6761, "
+            "\u5f53\u524d\u8fde\u63a5\u6570 148/151, Threads_running \u5cf0\u503c 32\u3002"
+            "\u4e0a\u6e38 order-service \u51fa\u73b0\u6570\u636e\u5e93\u8fde\u63a5\u8d85\u65f6\u3002"
+        ),
+        "runbook_url": "https://example.com/runbooks/mysql-slow-query",
+    },
 }
 
 
