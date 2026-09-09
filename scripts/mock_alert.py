@@ -108,7 +108,7 @@ SCENARIOS = {
     },
     "mysql": {
         "alertname": "MySQLLongRunningQuery",
-        "severity": "critical",
+        "severity": "warning",
         "service": "mysql",
         "instance": "mysql-primary-01:3306",
         "summary": "MySQL \u6162\u67e5\u8be2\u5806\u79ef 45 \u6761, \u8fde\u63a5\u6570\u6253\u6ee1",
