@@ -1,0 +1,596 @@
+{
+  "test_started_at": "2026-09-10T04:46:49.506744+00:00",
+  "mode_accuracy": {
+    "correct": 30,
+    "total": 30,
+    "rate": 1.0
+  },
+  "routing_accuracy": {
+    "correct": 21,
+    "total": 21,
+    "rate": 1.0
+  },
+  "e2e_success": {
+    "correct": 30,
+    "total": 30,
+    "rate": 1.0
+  },
+  "cases": [
+    {
+      "id": "E09",
+      "alertname": "UnknownAlertWarn",
+      "severity": "warning",
+      "task_id": "task_0b39fceda6414f15afe6a16c04e94d45",
+      "status": "succeeded",
+      "actual_mode": "fast",
+      "expected_mode": "fast",
+      "expected_agents": [],
+      "actual_agents": [],
+      "evidence_count": 2,
+      "report_chars": 2043
+    },
+    {
+      "id": "E08",
+      "alertname": "GenericAlert",
+      "severity": "warning",
+      "task_id": "task_825f015ea8b346c78c839c93f5354a17",
+      "status": "succeeded",
+      "actual_mode": "fast",
+      "expected_mode": "fast",
+      "expected_agents": [],
+      "actual_agents": [],
+      "evidence_count": 3,
+      "report_chars": 1695
+    },
+    {
+      "id": "E07",
+      "alertname": "ServiceUnavailable",
+      "severity": "warning",
+      "task_id": "task_f7783d224fb243f59225b7e67d6767d7",
+      "status": "succeeded",
+      "actual_mode": "fast",
+      "expected_mode": "fast",
+      "expected_agents": [],
+      "actual_agents": [],
+      "evidence_count": 3,
+      "report_chars": 2640
+    },
+    {
+      "id": "E06",
+      "alertname": "MySQLSlaveSlowQuery",
+      "severity": "warning",
+      "task_id": "task_a8c8a3cbdebd484aa226a1e860451d90",
+      "status": "succeeded",
+      "actual_mode": "fast",
+      "expected_mode": "fast",
+      "expected_agents": [],
+      "actual_agents": [],
+      "evidence_count": 3,
+      "report_chars": 2617
+    },
+    {
+      "id": "E05",
+      "alertname": "RedisMemoryHigh",
+      "severity": "warning",
+      "task_id": "task_c44e5802552f42c3b6b0e561dda71c07",
+      "status": "succeeded",
+      "actual_mode": "fast",
+      "expected_mode": "fast",
+      "expected_agents": [],
+      "actual_agents": [],
+      "evidence_count": 2,
+      "report_chars": 3271
+    },
+    {
+      "id": "E04",
+      "alertname": "DiskSpaceLowWarn",
+      "severity": "warning",
+      "task_id": "task_8b537bc64cc34e99ab60126da1c32200",
+      "status": "succeeded",
+      "actual_mode": "fast",
+      "expected_mode": "fast",
+      "expected_agents": [],
+      "actual_agents": [],
+      "evidence_count": 1,
+      "report_chars": 2127
+    },
+    {
+      "id": "E03",
+      "alertname": "KafkaISRShrinking",
+      "severity": "warning",
+      "task_id": "task_db26fc6fe042455cbc7bcb907635b3b9",
+      "status": "succeeded",
+      "actual_mode": "fast",
+      "expected_mode": "fast",
+      "expected_agents": [],
+      "actual_agents": [],
+      "evidence_count": 3,
+      "report_chars": 3370
+    },
+    {
+      "id": "E02",
+      "alertname": "ProcessMemoryLeakWarn",
+      "severity": "warning",
+      "task_id": "task_e3d81974ea154217806896e18b22a0a2",
+      "status": "succeeded",
+      "actual_mode": "fast",
+      "expected_mode": "fast",
+      "expected_agents": [],
+      "actual_agents": [],
+      "evidence_count": 2,
+      "report_chars": 2153
+    },
+    {
+      "id": "E01",
+      "alertname": "CPUHighUsageWarn",
+      "severity": "warning",
+      "task_id": "task_844188de3d5047bd9b255710151fe705",
+      "status": "succeeded",
+      "actual_mode": "fast",
+      "expected_mode": "fast",
+      "expected_agents": [],
+      "actual_agents": [],
+      "evidence_count": 1,
+      "report_chars": 1939
+    },
+    {
+      "id": "D03",
+      "alertname": "DatabaseRunbookConsult",
+      "severity": "critical",
+      "task_id": "task_96c9c16cc13c4b8f809141be9457a589",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "log_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 5,
+      "report_chars": 3402
+    },
+    {
+      "id": "D02",
+      "alertname": "UnknownAlert",
+      "severity": "critical",
+      "task_id": "task_ba1698c40c6c4626a962f0bcb6a53f62",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "metric_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "infra_agent",
+        "log_agent",
+        "metric_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 7,
+      "report_chars": 4412
+    },
+    {
+      "id": "D01",
+      "alertname": "UnknownFault",
+      "severity": "critical",
+      "task_id": "task_3dc1c91ee3fb4d1fb2bdcb5f1cf0b4b0",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "log_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 4,
+      "report_chars": 2848
+    },
+    {
+      "id": "C04",
+      "alertname": "OOMKilled",
+      "severity": "critical",
+      "task_id": "task_8f1c74c5010d4d6bbde4812f309763ba",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "metric_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "infra_agent",
+        "log_agent",
+        "metric_agent"
+      ],
+      "evidence_count": 5,
+      "report_chars": 3336
+    },
+    {
+      "id": "C03",
+      "alertname": "DiskSpaceLow",
+      "severity": "critical",
+      "task_id": "task_6b81f7a144d44e5dbc920f9bf304314d",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "metric_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "log_agent",
+        "metric_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 5,
+      "report_chars": 3447
+    },
+    {
+      "id": "C02",
+      "alertname": "ProcessMemoryLeak",
+      "severity": "critical",
+      "task_id": "task_68f55633dd1a41939fa71a124f8dbc50",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "metric_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "log_agent",
+        "metric_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 5,
+      "report_chars": 3586
+    },
+    {
+      "id": "C01",
+      "alertname": "CPUHighUsage",
+      "severity": "critical",
+      "task_id": "task_60b77dc43fcf42a9af4b6c32a5d58e03",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "metric_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "log_agent",
+        "metric_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 5,
+      "report_chars": 3447
+    },
+    {
+      "id": "B06",
+      "alertname": "NetworkPartition",
+      "severity": "critical",
+      "task_id": "task_0179784f18ea47638235d04dbb773b47",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "infra_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "infra_agent",
+        "log_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 5,
+      "report_chars": 3515
+    },
+    {
+      "id": "B05",
+      "alertname": "ServiceCallTimeout",
+      "severity": "critical",
+      "task_id": "task_5a13a6785baf47b38dc21b16bdaf725e",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "infra_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "infra_agent",
+        "log_agent"
+      ],
+      "evidence_count": 4,
+      "report_chars": 2848
+    },
+    {
+      "id": "B04",
+      "alertname": "PortUnavailable",
+      "severity": "critical",
+      "task_id": "task_e5e3ef8dd7014269966c652b5c1eab0a",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "infra_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "infra_agent",
+        "log_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 5,
+      "report_chars": 3495
+    },
+    {
+      "id": "B03",
+      "alertname": "APILatencyHigh",
+      "severity": "critical",
+      "task_id": "task_065afa7e28604c02815a7a6b2c1a2037",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "infra_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "infra_agent",
+        "log_agent"
+      ],
+      "evidence_count": 4,
+      "report_chars": 2768
+    },
+    {
+      "id": "B02",
+      "alertname": "DNSResolutionFailed",
+      "severity": "critical",
+      "task_id": "task_65ac6a54cf3942ea945e1117ae0d0243",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "infra_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "infra_agent",
+        "log_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 5,
+      "report_chars": 3462
+    },
+    {
+      "id": "B01",
+      "alertname": "ServiceUnreachable",
+      "severity": "critical",
+      "task_id": "task_b48fb3f2669545b1800cc09859bb8ea8",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "infra_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "infra_agent",
+        "log_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 6,
+      "report_chars": 4186
+    },
+    {
+      "id": "A08",
+      "alertname": "MySQLThreadsRunningHigh",
+      "severity": "critical",
+      "task_id": "task_e1e00dcfec424edd82f3f5694fbcc916",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "log_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 5,
+      "report_chars": 3483
+    },
+    {
+      "id": "A07",
+      "alertname": "MySQLConnectionTimeout",
+      "severity": "critical",
+      "task_id": "task_ec20e8e2f3f243bc84ef7df509516758",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "infra_agent",
+        "mysql_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "infra_agent",
+        "log_agent",
+        "mysql_agent"
+      ],
+      "evidence_count": 5,
+      "report_chars": 3433
+    },
+    {
+      "id": "A06",
+      "alertname": "MySQLDataDiskFull",
+      "severity": "critical",
+      "task_id": "task_55d319e87fc843869828d0eaefc384e1",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "metric_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "log_agent",
+        "metric_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 6,
+      "report_chars": 4042
+    },
+    {
+      "id": "A05",
+      "alertname": "MySQLDeadlockDetected",
+      "severity": "critical",
+      "task_id": "task_9201acce571d4cd4a00234c5336e5c96",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "log_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 5,
+      "report_chars": 3416
+    },
+    {
+      "id": "A04",
+      "alertname": "MySQLSlowQueryAlert",
+      "severity": "critical",
+      "task_id": "task_34db3c0d9e0f470b89bcd0702c58055c",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "mysql_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "log_agent",
+        "mysql_agent"
+      ],
+      "evidence_count": 4,
+      "report_chars": 2859
+    },
+    {
+      "id": "A03",
+      "alertname": "MySQLConnectionLimit",
+      "severity": "critical",
+      "task_id": "task_9a9c0d5693fe4dcb82fafa26b929cc82",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "log_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 5,
+      "report_chars": 3419
+    },
+    {
+      "id": "A02",
+      "alertname": "MySQLReplicationLag",
+      "severity": "critical",
+      "task_id": "task_72824128485e4b9e8c0ade1183e024ac",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "log_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 5,
+      "report_chars": 3427
+    },
+    {
+      "id": "A01",
+      "alertname": "MySQLLongRunningQuery",
+      "severity": "critical",
+      "task_id": "task_5e4704967e46494a8dcc10bae79a06d6",
+      "status": "succeeded",
+      "actual_mode": "deep",
+      "expected_mode": "deep",
+      "expected_agents": [
+        "log_agent",
+        "infra_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "actual_agents": [
+        "correlation_context",
+        "infra_agent",
+        "log_agent",
+        "mysql_agent",
+        "runbook_agent"
+      ],
+      "evidence_count": 6,
+      "report_chars": 4174
+    }
+  ]
+}
