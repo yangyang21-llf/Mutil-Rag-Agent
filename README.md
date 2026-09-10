@@ -35,6 +35,34 @@ Postgres 事实库、事件中心、权限与审批结构、LLM Wiki、RAG 评�
 
 ![Product Preview](intro.png)
 
+## 🚀 我的二次开发：MySQL 诊断专家 Agent
+
+本项目 fork 自 [Kkkirito-123/Mutil-Rag-Agent](https://github.com/Kkkirito-123/Mutil-Rag-Agent)，
+在保留原有 OnCall 多智能体诊断平台的基础上，我新增了 **MySQL 诊断专家 Agent**，
+让系统具备对 MySQL 数据库故障的自动取证与专项诊断能力。
+
+### 新增内容
+
+- **MCP Server**（`mcp_servers/mysql_server.py`）：为系统提供 4 个 MySQL **只读** 工具
+  - `check_mysql_connectivity`：TCP 连通性 + 账号登录验证
+  - `query_mysql_status`：关键指标（连接数 / 慢查询数 / 运行时长）
+  - `query_mysql_processlist`：按耗时排序的活跃查询进程
+  - `query_mysql_replication`：主从复制状态与延迟
+- **专家 Agent**（`app/agents/mysql_agent.py`）：MySQL 专项诊断科室，注册进 Deep Diagnosis
+  流水线，与 log / infra / runbook 等专家并行取证；通过 `_PLAN_KEYWORDS` 实现
+  MySQL 相关告警的关键词路由，自动派发到 MySQL 专家
+- **工程适配**：Dockerfile 增加国内构建环境代理规避，解决依赖拉取时的 SSL 连接问题
+
+### 验证效果
+
+触发 MySQL 慢查询 `critical` 告警 → webhook 判定进入 **deep** 模式 → 5 个专家科室并行诊断
+→ `mysql_agent` 被调度并实际调用 MCP 工具取证 → `mysql_snapshot` 证据进入最终报告，
+与 infra / log / runbook 证据一起支撑根因判定。
+
+![深度诊断报告](docs/screenshots/02-deep-report-overview.png)
+
+![mysql_agent 证据](docs/screenshots/01-deep-report-mysql-agent-evidence.png)
+
 ## 核心能力
 
 | 能力 | 当前实现 |
@@ -47,6 +75,8 @@ Postgres 事实库、事件中心、权限与审批结构、LLM Wiki、RAG 评�
 | MCP 工具 | 系统、联网搜索、Windows 日志、网络和 Docker 工具独立运行 |
 | 权限边界 | PermissionMode、ToolMeta、Guardrail 和人工审批共同约束副作用 |
 | 可量化验证 | 检索/RAG 评测集、并发测试脚本和历史压测报告 |
+
+
 
 ## 架构概览
 
